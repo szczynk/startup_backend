@@ -21,7 +21,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = require("./app/models");
 const { authJwt } = require("./app/middleware");
 const Role = db.role;
-const User = db.user;
 
 
 // db.sequelize.sync();
