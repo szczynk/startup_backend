@@ -1,16 +1,16 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081",
-  credentials: true
+  origin: 'http://localhost:8081',
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
-global.__basedir = __dirname + '/app/' ;
+global.__basedir = __dirname + '/app/';
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
@@ -18,21 +18,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // database
-const db = require("./app/models");
-const { authJwt } = require("./app/middleware");
+const db = require('./app/models');
+const { authJwt } = require('./app/middleware');
 const Role = db.role;
-
 
 // db.sequelize.sync();
 // force: true will drop the table if it already exists
-db.sequelize.sync({force: true}).then(() => {
-   console.log('Drop and Resync Database with { force: true }');
-   initial();
-});
+// db.sequelize.sync({force: true}).then(() => {
+//    console.log('Drop and Resync Database with { force: true }');
+//    initial();
+// });
 
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome" });
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome' });
 });
 
 // routes
@@ -40,10 +39,10 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/upload.routes')(app);
 
-app.get("/profilehunter",(req,res) => {
+app.get('/profilehunter', (req, res) => {
   console.log(req.currentUser);
   res.send(req.currentUser);
-})
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -54,21 +53,21 @@ app.listen(PORT, () => {
 function initial() {
   Role.create({
     id: 1,
-    name: "admin"
+    name: 'admin',
   });
- 
+
   Role.create({
     id: 2,
-    name: "moderator"
+    name: 'moderator',
   });
- 
+
   Role.create({
     id: 3,
-    name: "hunter"
+    name: 'hunter',
   });
 
   Role.create({
     id: 4,
-    name: "user"
+    name: 'user',
   });
 }
